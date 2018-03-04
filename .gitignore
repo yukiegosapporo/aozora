@@ -1,0 +1,3 @@
+data/*
+static/dist/*
+static/node_modules/*
