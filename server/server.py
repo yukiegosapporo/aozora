@@ -29,7 +29,9 @@ def search_files(stxt):
     for i in lst:
         if (s in i["en"].lower()) | (s in i["de"].lower()) | (s in "。".join(i
             ["jp"]).lower()):
-            rv.append(i["titleauthor"])
+            rv.append({
+                "titleauthor": i["titleauthor"],
+                "preview": i["de"][0:1000] + "....."})
     return rv
 
 @app.route('/')
@@ -43,10 +45,10 @@ def sagasu():
         stxt = request.form['text']
         hits = search_files(stxt)
         # logger.warning(alg.matched_docs)
-        return jsonify([{'text': i} for i in hits])
+        return jsonify(hits)
     except ValueError:
         raise 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
     # , host='0.0.0.0'

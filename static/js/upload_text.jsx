@@ -5,7 +5,27 @@ import superagent from 'superagent';
 import ReactTable from 'react-table'
 var $ = require('jquery');
 //require('../css/styles.css');
-import { Button, Grid, Row, Col, Media, FormGroup, FormControl, Form } from "react-bootstrap";
+//import { Button, Grid, Row, Col, Media, FormGroup, FormControl, Form } from
+//"react-bootstrap";
+
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  List,
+  Menu,
+  Form,
+  TextArea,
+  Responsive,
+  Segment,
+  Sidebar,
+  Popup,
+  Visibility,
+} from 'semantic-ui-react'
 
 export default class UploadText extends React.Component{
 
@@ -30,35 +50,46 @@ export default class UploadText extends React.Component{
     render(){
       return (
       <Grid>
-        <Row>
-          <Col md={12} mdOffset={0}>
-            <Form horizontal onSubmit={this.post_sagasu}>
-              <FormGroup controlId="formHorizontalText">
-                <Col sm={10} xsOffset={0}>
-                  <FormControl placeholder="Search text"  type="text"
+          <Grid.Column width={11}>
+            <Form onSubmit={this.post_sagasu}>
+                <Grid.Column width={9}>
+                  <Form.Field control={TextArea}
+                  placeholder="Some lovely sentenses" type="text"
                   name="text"/>
-                </Col>
-
-              </FormGroup>
-
-              <Button bsSize="large" bsStyle="success" type="submit">
-                Sagasu!
+                </Grid.Column>
+              <Button inverted color="blue" type="submit">
+                Sagasu
+                <Icon name='right arrow' />
               </Button>
             </Form>
-
             {this.state.hits.map(function(d) {
-                return <Media key={d.text}>
-                        <Media.Body>
+                return <List divided relaxed>
+                        <List.Item key={d.titleauthor}>
+                          <List.Content>
+                            <List.Header as='a'>
+                              {d.titleauthor.replace("\n",'&').split('&')[0]}
+                            </List.Header>
 
-                          <p>
-                            {d.text}
-                          </p>
-                        </Media.Body>
-                        </Media>
+                            <List.Description as='a'>
+                              {d.titleauthor.replace("\n",'&').split('&')[1]}
+                            </List.Description>
+                              <Popup
+                                  key={d.titleauthor}
+                                  trigger={<Button icon='add' key={d.titleauthor.concat("button")}/>}
+                                  content={d.preview}
+                                  wide='very'
+                                />
+                          </List.Content>
+
+                        </List.Item>
+                      </List>
+
                   })}
 
-          </Col>
-        </Row>
+
+
+          </Grid.Column>
+
       </Grid>
       );
     }
