@@ -12,6 +12,7 @@ import {
   Button,
   Container,
   Divider,
+  Card,
   Grid,
   Header,
   Icon,
@@ -52,41 +53,46 @@ export default class UploadText extends React.Component{
       <Grid>
           <Grid.Column width={11}>
             <Form onSubmit={this.post_sagasu}>
-                <Grid.Column width={9}>
+
                   <Form.Field control={TextArea}
                   placeholder="Some lovely sentenses" type="text"
                   name="text"/>
-                </Grid.Column>
+
               <Button inverted color="blue" type="submit">
                 Sagasu
                 <Icon name='right arrow' />
               </Button>
             </Form>
-            {this.state.hits.map(function(d) {
-                return <List divided relaxed>
-                        <List.Item key={d.titleauthor}>
-                          <List.Content>
-                            <List.Header as='a'>
-                              {d.titleauthor.replace("\n",'&').split('&')[0]}
-                            </List.Header>
 
-                            <List.Description as='a'>
-                              {d.titleauthor.replace("\n",'&').split('&')[1]}
-                            </List.Description>
-                              <Popup
-                                  key={d.titleauthor}
-                                  trigger={<Button icon='add' key={d.titleauthor.concat("button")}/>}
-                                  content={d.preview}
-                                  wide='very'
-                                />
-                          </List.Content>
+<Card.Group>
+{this.state.hits.map(function(d) {
+  return <Card key={d.titleauthor.concat("card")}>
+      <Card.Content>
+         <Popup
+            key={d.titleauthor}
+            trigger={
+              <Button 
+              icon='add' 
+              floated="right" 
+              key={d.titleauthor.concat("button")}/>}
+            content={d.preview}
+            wide='very'
+          />
 
-                        </List.Item>
-                      </List>
-
-                  })}
-
-
+        <Card.Header>
+          {d.titleauthor.replace("\n",'&').split('&')[0]}
+        </Card.Header>
+        <Card.Meta>
+        </Card.Meta>
+        <Card.Description>
+          {d.titleauthor.replace("\n",'&').split('&')[1].split('　')[0]}
+        </Card.Description>
+      </Card.Content>
+    </Card>
+  }
+  )
+}
+</Card.Group>    
 
           </Grid.Column>
 
