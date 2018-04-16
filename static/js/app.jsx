@@ -1,5 +1,5 @@
 import React from "react";
-import UploadText from "./upload_text"
+import Diagnose from "./upload_text"
 import { Jumbotron, PageHeader } from "react-bootstrap";
 
 require('../css/styles.css');
@@ -21,12 +21,12 @@ export default class App extends React.Component {
 
                 <div className='header-contents'>
                 <Jumbotron>
-                  <h1>Aozora search in jp, de, en</h1>
+                  <h1>Shindanr (診断r)</h1>
                   <p>
-                  find your favorite copy right free classical books in Japan
+                  Don't miss anything
                   </p>
                 </Jumbotron>
-                <UploadText />
+                <Diagnose />
                 </div>
         );
     }
