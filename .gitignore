@@ -1,4 +1,6 @@
 data/*
 static/dist/*
 static/node_modules/*
-.DS_Store
+*.DS_Store
+server/.server.py.swp
+server/inputs/

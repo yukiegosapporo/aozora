@@ -5,7 +5,7 @@ const config = {
     entry:   {
         index: __dirname + '/js/index.jsx',
         app: __dirname + '/js/app.jsx',
-        upload_text: __dirname + '/js/upload_text.jsx',
+        diagnose_it: __dirname + '/js/diagnose_it.jsx',
     },
 
     output: {

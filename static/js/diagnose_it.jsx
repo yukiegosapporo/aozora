@@ -34,8 +34,8 @@ import {HorizontalBar} from 'react-chartjs-2';
 
 
 const options = [
-  { key: 'm', text: 'Male', value: '1' },
-  { key: 'f', text: 'Female', value: '2' },
+  { text: 'Male', value: '1' },
+  { text: 'Female', value: '2' },
 ]
 
 export default class Diagnose extends React.Component{
@@ -86,21 +86,21 @@ export default class Diagnose extends React.Component{
 <hr />
 <h2>User input</h2>
             <Form.Group widths='equal'>
-              <Form.Input fluid label='MCV' defaultValue='0.1' name="mcv"/>
-              <Form.Input fluid label='Hämatokrit' defaultValue='0.1' name='hamatokrit'/>
-              <Form.Input fluid label='Hämoglobin' defaultValue='0.1' name='hamoglobin'/>
-              <Form.Input fluid label='MCH' defaultValue='0.1' name='mch'/>
-              <Form.Input fluid label='MCHC' defaultValue='0.1' name='mchc'/>
+              <Form.Input fluid label='CRP' defaultValue='13.894533' name='crp'/>
+              <Form.Input fluid label='Erythrozyten' defaultValue='4.088216' name='erythrozyten'/>
+              <Form.Input fluid label='Hämatokrit' defaultValue='36.024247' name='hamatokrit'/>
+              <Form.Input fluid label='Hämoglobin' defaultValue='12.163686' name='hamoglobin'/>
+              <Form.Input fluid label='Kreatinin' defaultValue='99.418287' name='kreatinin'/>
             </Form.Group>
             <Form.Group widths='equal'>
-              <Form.Input fluid label='Erythrozyten' defaultValue='0.1' name='erythrozyten'/>
-              <Form.Input fluid label='Thrombozyten' defaultValue='0.1' name='thrombozyten'/>
-              <Form.Input fluid label='Leukozyten' defaultValue='0.1' name='leukozyten'/>
-              <Form.Input fluid label='MPV' defaultValue='0.1' name='mpv'/>
-              <Form.Input fluid label='CRP' defaultValue='0.1' name='crp'/>
+              <Form.Input fluid label='Leukozyten' defaultValue='7.320087' name='leukozyten'/>
+              <Form.Input fluid label='MCH' defaultValue='29.825150' name='mch'/>
+              <Form.Input fluid label='MCHC' defaultValue='33.713424' name='mchc'/>
+              <Form.Input fluid label='MCV' defaultValue='88.469230' name="mcv"/>
+              <Form.Input fluid label='MPV' defaultValue='10.426725' name='mpv'/>
             </Form.Group>
             <Form.Group widths='equal'>
-            <Form.Input fluid label='Kreatinin' defaultValue='0.1' name='kreatinin'/>
+            <Form.Input fluid label='Thrombozyten' defaultValue='349.778999' name='thrombozyten'/>
             <Form.Input fluid label='More' disabled />
             <Form.Input fluid label='to' disabled />
             <Form.Input fluid label='come' disabled />
@@ -108,8 +108,8 @@ export default class Diagnose extends React.Component{
           </Form.Group>
 
             <Form.Group inline>
+            <Form.Input fluid label='Gender' type = 'select' placeholder='Gender' name='gender' defaultValue='1'/>
             <Form.Input fluid label='Your age' defaultValue='70' name='age'/>
-            <Form.Select fluid label='Gender' options={options} placeholder='Gender' name='gender' defaultValue='1'/>
             </Form.Group>
 
 <hr />

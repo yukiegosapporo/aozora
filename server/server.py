@@ -24,22 +24,14 @@ logger.addHandler(handler)
 app = Flask(__name__, static_folder='../static/dist', template_folder='../static')
 CORS(app)
 
-with open('min_model', 'rb') as f:
+with open('inputs/model', 'rb') as f:
 	model = pickle.load(f)
 
-with open('min_model_major_diagnose', 'rb') as f:
+with open('inputs/major_diagnose', 'rb') as f:
     labels = pickle.load(f)
 
-# def search_files(stxt):
-#     rv = []
-#     s = stxt.lower()
-#     for i in lst:
-#         if (s in i["en"].lower()) | (s in i["de"].lower()) | (s in "。".join(i
-#             ["jp"]).lower()):
-#             rv.append({
-#                 "titleauthor": i["titleauthor"],
-#                 "preview": i["de"][0:1000] + "....."})
-#     return rv
+with open('inputs/scaler', 'rb') as f:
+    scaler = pickle.load(f)
 
 @app.route('/')
 def index():
@@ -49,25 +41,32 @@ def index():
 def diagnose():
     response = {}
     j = request.get_json(silent=True)
+    logger.warning(j)
     thre = float(j['cl'])
-    x = np.array(
-        [
-            float(j['mcv']),
+    raw_x = np.array(
+        [[
+            float(j['crp']),
+            float(j['erythrozyten']),
             float(j['hamatokrit']),
             float(j['hamoglobin']),
+            float(j['kreatinin']),
+            float(j['leukozyten']),
             float(j['mch']),
             float(j['mchc']),
-            float(j['erythrozyten']),
-            float(j['thrombozyten']),
-            float(j['leukozyten']),
+            float(j['mcv']),
             float(j['mpv']),
-            float(j['crp']),
-            float(j['kreatinin']),
-            int(j['age']),
-            1
-            # int(request.form['gender'])
-        ])
+            float(j['thrombozyten']),
+            # 1,
+            int(j['gender']),
+            int(j['age'])
+
+        ]])
+    x = scaler.transform(raw_x)[0]
     preds = model.predict(np.expand_dims(x, axis=0))
+
+    if len(preds[0]) != len(labels):
+        raise ValueError('predicted labels and actual labels have different lengths')
+
     rv = preds.tolist()[0]
     diagnosis_index = np.where(preds > thre)[1]
     major_diagnosis_prob = preds[np.where(preds > thre)]
@@ -78,10 +77,7 @@ def diagnose():
     sorted_majors.reverse()
     sorted_labels = list(map(operator.itemgetter(0), sorted_majors))
     sorted_values = list(map(operator.itemgetter(1), sorted_majors))
-    logger.warning(sorted_labels)
-    logger.warning(sorted_values)
-    # response["labels"] = major_labels
-    # response["datasets"] = [{"data": major_rv, "label": "My Chart"}]
+
     response["labels"] = sorted_labels
     response["datasets"] = [{
     "data": sorted_values,
